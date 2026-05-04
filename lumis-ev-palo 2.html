@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LUMIS EV — Palo Nuova Generazione con Ricarica Integrata</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F2F4F8; --paper:#FFFFFF; --card:#F8FAFD;
+  --green:#006A48; --green-l:#00A870; --green-xl:#E6F7F1;
+  --blue:#1A55A8; --blue-l:#E8F0FB;
+  --amber:#8A5A00; --amber-l:#FFF4E0;
+  --slate:#3A4A62; --slate-l:#8A9ABB;
+  --border:#D4DCF0; --border-l:#EAF0FA;
+  --text:#1C2538; --text-2:#5A6A82;
+  --shadow:0 2px 20px rgba(28,37,56,0.08);
+  --shadow-lg:0 8px 40px rgba(28,37,56,0.12);
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:80px}
+
+/* HEADER */
+header{background:var(--paper);border-bottom:1px solid var(--border);box-shadow:var(--shadow);padding:18px 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#006A48,#00C888);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(0,168,112,0.3)}
+.brand-name{font-family:'Space Mono',monospace;font-size:16px;color:var(--green);font-weight:700;letter-spacing:0.5px}
+.brand-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.doc-badges{display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-family:'Space Mono',monospace;font-size:9px;padding:4px 10px;border-radius:20px;letter-spacing:1px;font-weight:700}
+.badge-green{background:var(--green-xl);color:var(--green);border:1px solid #A0DEC8}
+.badge-blue{background:var(--blue-l);color:var(--blue);border:1px solid #B0CCEC}
+.badge-amber{background:var(--amber-l);color:var(--amber);border:1px solid #E0C888}
+
+/* NAV */
+nav{background:var(--paper);border-bottom:1px solid var(--border);padding:0 36px;display:flex;overflow-x:auto;gap:0}
+nav::-webkit-scrollbar{display:none}
+.tab{font-family:'Space Mono',monospace;font-size:10px;padding:13px 20px;border:none;background:none;color:var(--slate-l);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;letter-spacing:0.5px}
+.tab.on{color:var(--green);border-bottom-color:var(--green);font-weight:700}
+.tab:hover:not(.on){color:var(--slate);background:var(--card)}
+
+/* LAYOUT */
+main{max-width:1200px;margin:0 auto;padding:32px 24px}
+.panel{display:none}.panel.on{display:block}
+.page-title{font-family:'Space Mono',monospace;font-size:11px;color:var(--slate-l);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.page-desc{font-size:14px;color:var(--text-2);margin-bottom:28px;line-height:1.6}
+
+/* CARDS */
+.card{background:var(--paper);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
+.card-title{font-family:'Space Mono',monospace;font-size:9px;color:var(--slate-l);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border-l)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.g14{display:grid;grid-template-columns:1fr 380px;gap:28px}
+@media(max-width:900px){.g2,.g3,.g14{grid-template-columns:1fr}}
+
+/* SPEC TABLE */
+.spec-group{margin-bottom:20px}
+.spec-group-title{font-family:'Space Mono',monospace;font-size:8px;color:var(--green);letter-spacing:2px;margin-bottom:10px;font-weight:700}
+.spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--border-l);gap:12px;font-size:13px}
+.spec-row:last-child{border-bottom:none}
+.spec-k{color:var(--text-2)}
+.spec-v{font-family:'Space Mono',monospace;font-size:11px;color:var(--text);text-align:right;font-weight:700}
+.spec-v.accent{color:var(--green)}
+.spec-v.blue{color:var(--blue)}
+
+/* FEATURE PILLS */
+.features{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.feat{font-size:11px;padding:5px 12px;border-radius:20px;font-weight:500}
+.feat-g{background:var(--green-xl);color:var(--green);border:1px solid #A0DEC8}
+.feat-b{background:var(--blue-l);color:var(--blue);border:1px solid #B0CCEC}
+.feat-a{background:var(--amber-l);color:var(--amber);border:1px solid #E0C888}
+
+/* COMPARISON TABLE */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:10px 14px;background:var(--card);border-bottom:2px solid var(--border);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--slate-l)}
+td{padding:10px 14px;border-bottom:1px solid var(--border-l)}
+tr:last-child td{border-bottom:none}
+.td-label{color:var(--text-2);font-weight:500}
+.td-old{color:#CC3333}
+.td-new{color:var(--green);font-weight:600}
+
+/* CALLOUT */
+.callout{padding:16px 20px;border-radius:10px;font-size:13px;line-height:1.6;margin-top:20px}
+.callout-green{background:var(--green-xl);border-left:4px solid var(--green);color:var(--green)}
+.callout-blue{background:var(--blue-l);border-left:4px solid var(--blue);color:var(--blue)}
+.callout-amber{background:var(--amber-l);border-left:4px solid var(--amber);color:var(--amber)}
+.callout strong{display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;margin-bottom:4px}
+
+
+
+/* ── COPYRIGHT WATERMARK ── */
+.cp-banner{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(90deg,#1a4a1a,#1a3a6a);
+  color:#fff;
+  padding:8px 20px;
+  border-radius:8px;
+  margin-bottom:20px;
+  font-size:11px;
+  letter-spacing:.4px;
+  flex-wrap:wrap;gap:6px;
+}
+.cp-banner b{font-size:13px;letter-spacing:.5px}
+.cp-banner .cp-right{opacity:.7;font-size:10px}
+.cp-footer{
+  text-align:center;
+  padding:14px 0 8px;
+  margin-top:24px;
+  border-top:2px solid #e0e8f0;
+  font-size:11px;
+  color:#5f6368;
+  letter-spacing:.3px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">🌿</div>
+    <div>
+      <div class="brand-name">LUMIS EV — PALO NUOVA GENERAZIONE</div>
+      <div class="brand-sub">Illuminazione pubblica + Ricarica EV 7+7kW integrata by design · V2G Ready</div>
+    </div>
+  </div>
+  <div class="doc-badges">
+    <span class="badge badge-green">NUOVA INSTALLAZIONE</span>
+    <span class="badge badge-blue">7+7 kW · V2G</span>
+    <span class="badge badge-amber">REV. 1.0 · 2026</span>
+  </div>
+</header>
+
+<nav>
+  <button class="tab on" onclick="show(0)">🏛 Vista Completa</button>
+  <button class="tab" onclick="show(1)">⚡ Modulo Ricarica</button>
+  <button class="tab" onclick="show(2)">📐 Sezioni Tecniche</button>
+  <button class="tab" onclick="show(3)">📋 Specifiche</button>
+  <button class="tab" onclick="show(4)">⚖ Confronto Retrofit</button>
+</nav>
+
+<main>
+
+<!-- ══════════════ TAB 0: VISTA COMPLETA ══════════════ -->
+<div class="panel on" id="p0">
+<div class="cp-banner">
+  <div>⚡ <b>© 2026 POLARIS Platform</b> &nbsp;·&nbsp; Tutti i diritti riservati &nbsp;·&nbsp; <b>CONFIDENZIALE</b> &nbsp;·&nbsp; Non divulgare senza autorizzazione scritta</div>
+  <div class="cp-right">POLARIS EV System &nbsp;·&nbsp; Patent Pending &nbsp;·&nbsp; Rev. 2.0 &nbsp;·&nbsp; Maggio 2026</div>
+</div>
+<p class="page-title">Vista Generale</p>
+<p class="page-desc">Palo urbano di nuova generazione con ricarica EV integrata nella struttura. Illuminazione LED, modulo di ricarica, smistamento cavi e smart meter fanno parte del corpo unico in alluminio estruso.</p>
+
+<div class="g14">
+<div>
+<div class="card">
+<div class="card-title">VISTA FRONTALE COMPLETA — SCALA 1:15 — H = 8 m</div>
+
+<svg viewBox="0 0 560 900" style="width:100%;display:block">
+<defs>
+  <!-- Pole shaft gradient: aluminium anodized -->
+  <linearGradient id="shaft" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#B8C8D8"/>
+    <stop offset="18%"  stop-color="#D8E8F0"/>
+    <stop offset="38%"  stop-color="#F0F6FA"/>
+    <stop offset="50%"  stop-color="#FFFFFF"/>
+    <stop offset="62%"  stop-color="#E8F2F8"/>
+    <stop offset="80%"  stop-color="#C8D8E8"/>
+    <stop offset="100%" stop-color="#A8B8C8"/>
+  </linearGradient>
+  <!-- Charging module gradient: dark anodized green-black -->
+  <linearGradient id="evMod" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#182820"/>
+    <stop offset="30%"  stop-color="#243830"/>
+    <stop offset="50%"  stop-color="#2E4A3C"/>
+    <stop offset="70%"  stop-color="#243830"/>
+    <stop offset="100%" stop-color="#182820"/>
+  </linearGradient>
+  <!-- Base pedestal -->
+  <linearGradient id="base" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0%"   stop-color="#D0D8E8"/>
+    <stop offset="100%" stop-color="#A8B4C4"/>
+  </linearGradient>
+  <!-- LED head -->
+  <linearGradient id="ledHead" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0%"   stop-color="#2A3848"/>
+    <stop offset="100%" stop-color="#1A2838"/>
+  </linearGradient>
+  <!-- Smart meter box -->
+  <linearGradient id="meterBox" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#1A2A3A"/>
+    <stop offset="100%" stop-color="#243444"/>
+  </linearGradient>
+  <!-- Arm -->
+  <linearGradient id="arm" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#C8D8E8"/>
+    <stop offset="50%"  stop-color="#E8F2FA"/>
+    <stop offset="100%" stop-color="#C0D0E0"/>
+  </linearGradient>
+  <!-- LED light glow -->
+  <radialGradient id="ledGlow" cx="50%" cy="80%" r="60%">
+    <stop offset="0%"   stop-color="#FFFFDD" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#FFE840" stop-opacity="0"/>
+  </radialGradient>
+  <!-- Socket face realism -->
+  <radialGradient id="sockFaceA" cx="40%" cy="35%" r="65%">
+    <stop offset="0%"   stop-color="#3A3A3A"/>
+    <stop offset="60%"  stop-color="#1A1A1A"/>
+    <stop offset="100%" stop-color="#080808"/>
+  </radialGradient>
+  <radialGradient id="pinR" cx="40%" cy="38%" r="58%">
+    <stop offset="0%"   stop-color="#C0C0C0"/>
+    <stop offset="60%"  stop-color="#808080"/>
+    <stop offset="100%" stop-color="#404040"/>
+  </radialGradient>
+  <filter id="poleSh">
+    <feDropShadow dx="6" dy="0" stdDeviation="12" flood-color="#A0B0C0" flood-opacity="0.35"/>
+  </filter>
+  <filter id="modSh">
+    <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.25"/>
+  </filter>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="6" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glowS">
+    <feGaussianBlur stdDeviation="3" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<!-- ── GROUND STRIP ── -->
+<rect x="0" y="855" width="560" height="45" fill="#E8ECF2"/>
+<line x1="0" y1="855" x2="560" y2="855" stroke="#C8D0E0" stroke-width="1.5"/>
+<text x="280" y="875" text-anchor="middle" fill="#A0AAB8" font-family="'Space Mono',monospace" font-size="9" letter-spacing="2">PIANO STRADALE</text>
+
+<!-- ── CONCRETE BASE / FONDAZIONE ── -->
+<rect x="196" y="808" width="168" height="50" rx="4" fill="url(#base)" stroke="#B0BCC8" stroke-width="1.5"/>
+<text x="280" y="829" text-anchor="middle" fill="#7A8A9A" font-family="'Space Mono',monospace" font-size="8">BASAMENTO</text>
+<text x="280" y="841" text-anchor="middle" fill="#8A9AAA" font-family="'Space Mono',monospace" font-size="7">calcestruzzo 600×400 mm</text>
+<!-- Anchor bolts -->
+<rect x="208" y="804" width="8" height="16" rx="2" fill="#9AA8B8"/>
+<rect x="344" y="804" width="8" height="16" rx="2" fill="#9AA8B8"/>
+
+<!-- ── ANCHOR FLANGE ── -->
+<rect x="218" y="784" width="124" height="26" rx="6" fill="#B8C4D4" stroke="#9AAABB" stroke-width="1.5"/>
+<!-- Flange bolts -->
+<circle cx="232" cy="797" r="5" fill="#8898A8" stroke="#6A7A8A" stroke-width="1"/>
+<circle cx="248" cy="797" r="5" fill="#8898A8" stroke="#6A7A8A" stroke-width="1"/>
+<circle cx="312" cy="797" r="5" fill="#8898A8" stroke="#6A7A8A" stroke-width="1"/>
+<circle cx="328" cy="797" r="5" fill="#8898A8" stroke="#6A7A8A" stroke-width="1"/>
+<text x="280" y="801" text-anchor="middle" fill="#6A7A8A" font-family="'Space Mono',monospace" font-size="7.5">FLANGIA ANCORAGGIO</text>
+
+<!-- ── POLE SHAFT (tapered, aluminium) ── -->
+<!-- Main shaft body -->
+<polygon points="240,784 320,784 312,88 248,88" fill="url(#shaft)" filter="url(#poleSh)"/>
+<!-- Left edge highlight -->
+<line x1="240" y1="784" x2="248" y2="88" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
+<!-- Right edge shadow -->
+<line x1="320" y1="784" x2="312" y2="88" stroke="#A0B0C0" stroke-width="2" opacity="0.6"/>
+<!-- Internal cable channel (slot visible on face) -->
+<rect x="274" y="95" width="12" height="685" rx="3" fill="#D0DCE8" opacity="0.4"/>
+<text x="268" y="460" text-anchor="middle" fill="#A0B0C0" font-family="'Space Mono',monospace" font-size="7" transform="rotate(-90,268,460)">CAVITÀ CAVI INTEGRATA</text>
+
+<!-- ── SMART METER + PROTECTION BOX (at base, 30cm height) ── -->
+<rect x="315" y="715" width="90" height="58" rx="8" fill="url(#meterBox)" stroke="#2A3A4A" stroke-width="1.5" filter="url(#modSh)"/>
+<!-- Connection line to pole -->
+<line x1="320" y1="744" x2="315" y2="744" stroke="#3A4A5A" stroke-width="2"/>
+<text x="360" y="734" text-anchor="middle" fill="#5A8AB0" font-family="'Space Mono',monospace" font-size="7.5" font-weight="700">QUADRO BASE</text>
+<text x="360" y="745" text-anchor="middle" fill="#3A6A8A" font-family="'Space Mono',monospace" font-size="7">MCB · RCD · SPD</text>
+<text x="360" y="756" text-anchor="middle" fill="#3A6A8A" font-family="'Space Mono',monospace" font-size="7">SMART METER MID</text>
+<text x="360" y="767" text-anchor="middle" fill="#2A5A7A" font-family="'Space Mono',monospace" font-size="7">IP44 / IK08</text>
+<!-- connection dashes -->
+<line x1="315" y1="744" x2="240" y2="744" stroke="#2A4A6A" stroke-width="1" stroke-dasharray="4,3"/>
+
+<!-- ── EV CHARGING MODULE (integrated at h=1m) ── -->
+<!-- Left socket housing -->
+<rect x="150" y="636" width="92" height="130" rx="14" fill="url(#evMod)" stroke="#00A870" stroke-width="2.5" filter="url(#modSh)"/>
+<rect x="151" y="637" width="90" height="128" rx="13" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.12"/>
+<!-- Connecting plate to pole -->
+<rect x="238" y="660" width="10" height="84" fill="#1E3028" stroke="#00A870" stroke-width="1"/>
+
+<!-- Right socket housing -->
+<rect x="318" y="636" width="92" height="130" rx="14" fill="url(#evMod)" stroke="#00A870" stroke-width="2.5" filter="url(#modSh)"/>
+<rect x="319" y="637" width="90" height="128" rx="13" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.12"/>
+<!-- Connecting plate to pole -->
+<rect x="312" y="660" width="10" height="84" fill="#1E3028" stroke="#00A870" stroke-width="1"/>
+
+<!-- ── TYPE 2 SOCKET FACES — REALISTIC ── -->
+<!-- LEFT SOCKET FACE (on left side of left housing) -->
+<!-- Outer shell ring -->
+<circle cx="178" cy="702" r="36" fill="#141414" stroke="#404040" stroke-width="2"/>
+<circle cx="178" cy="702" r="32" fill="#282828"/>
+<!-- Body shape (Mennekes) -->
+<path d="M178,670 C190,670 200,674 206,682 C212,692 213,704 211,716 C209,726 205,732 205,740 C205,748 211,756 212,762 C213,770 211,780 204,786 C197,792 188,795 178,795 C168,795 159,792 152,786 C145,780 143,770 144,762 C145,756 151,748 151,740 C151,732 147,726 145,716 C143,704 144,692 150,682 C156,674 166,670 178,670 Z" fill="#2C2C2C" stroke="#505050" stroke-width="1.8"/>
+<!-- Rim highlight -->
+<path d="M162,672 C168,669 188,669 194,672 C200,676 208,684 210,694 C204,686 196,678 188,674 C180,670 166,670 158,674 C150,678 142,686 146,694 C148,684 156,676 162,672 Z" fill="#686868" opacity="0.5"/>
+<!-- Embossed labels -->
+<text x="160" y="685" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">PP</text>
+<text x="188" y="685" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">CP</text>
+<text x="145" y="720" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">L1</text>
+<text x="200" y="720" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">N</text>
+<text x="150" y="776" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">L2</text>
+<text x="195" y="776" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">L3</text>
+<text x="172" y="685" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">PE</text>
+<!-- PP small -->
+<circle cx="163" cy="692" r="9"  fill="#141414" stroke="#383838" stroke-width="1.5"/>
+<circle cx="163" cy="692" r="4"  fill="#888888"/>
+<circle cx="161" cy="690" r="1.5" fill="#DDDDDD" opacity="0.8"/>
+<!-- PE medium -->
+<circle cx="178" cy="692" r="11" fill="#141414" stroke="#404040" stroke-width="1.5"/>
+<circle cx="178" cy="692" r="5"  fill="#909090"/>
+<circle cx="176" cy="690" r="2"  fill="#E8E8E8" opacity="0.8"/>
+<!-- CP small -->
+<circle cx="193" cy="692" r="9"  fill="#141414" stroke="#383838" stroke-width="1.5"/>
+<circle cx="193" cy="692" r="4"  fill="#888888"/>
+<circle cx="191" cy="690" r="1.5" fill="#DDDDDD" opacity="0.8"/>
+<!-- L1 large -->
+<circle cx="158" cy="724" r="15" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="158" cy="724" r="7"  fill="#909090"/>
+<circle cx="155" cy="721" r="2.5" fill="#E0E0E0" opacity="0.75"/>
+<!-- N large -->
+<circle cx="198" cy="724" r="15" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="198" cy="724" r="7"  fill="#909090"/>
+<circle cx="195" cy="721" r="2.5" fill="#E0E0E0" opacity="0.75"/>
+<!-- L2 large -->
+<circle cx="163" cy="762" r="16" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="163" cy="762" r="7"  fill="#909090"/>
+<circle cx="160" cy="759" r="2.5" fill="#E0E0E0" opacity="0.75"/>
+<!-- L3 large -->
+<circle cx="193" cy="762" r="16" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="193" cy="762" r="7"  fill="#909090"/>
+<circle cx="190" cy="759" r="2.5" fill="#E0E0E0" opacity="0.75"/>
+<!-- Lock bar -->
+<rect x="162" y="782" width="32" height="7" rx="3" fill="#1A1A1A" stroke="#383838" stroke-width="1"/>
+<text x="178" y="788" text-anchor="middle" fill="#707070" font-family="'Space Mono',monospace" font-size="5.5">LOCK</text>
+<!-- LED strip top of housing -->
+<rect x="155" y="640" width="46" height="5" rx="2.5" fill="#00E5A0" opacity="0.8" filter="url(#glowS)"/>
+<!-- Status text -->
+<text x="178" y="800" text-anchor="middle" fill="#00A870" font-family="'Space Mono',monospace" font-size="8" font-weight="700">FREE · 0.0kW</text>
+
+<!-- RIGHT SOCKET FACE -->
+<circle cx="382" cy="702" r="36" fill="#141414" stroke="#404040" stroke-width="2"/>
+<circle cx="382" cy="702" r="32" fill="#282828"/>
+<path d="M382,670 C394,670 404,674 410,682 C416,692 417,704 415,716 C413,726 409,732 409,740 C409,748 415,756 416,762 C417,770 415,780 408,786 C401,792 392,795 382,795 C372,795 363,792 356,786 C349,780 347,770 348,762 C349,756 355,748 355,740 C355,732 351,726 349,716 C347,704 348,692 354,682 C360,674 370,670 382,670 Z" fill="#2C2C2C" stroke="#505050" stroke-width="1.8"/>
+<path d="M366,672 C372,669 392,669 398,672 C404,676 412,684 414,694 C408,686 400,678 392,674 C384,670 370,670 362,674 C354,678 346,686 350,694 C352,684 360,676 366,672 Z" fill="#686868" opacity="0.5"/>
+<!-- Labels -->
+<text x="364" y="685" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">PP</text>
+<text x="392" y="685" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">CP</text>
+<text x="349" y="720" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">L1</text>
+<text x="404" y="720" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">N</text>
+<text x="354" y="776" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">L2</text>
+<text x="399" y="776" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">L3</text>
+<text x="376" y="685" fill="#505050" font-family="Arial" font-size="8" font-weight="bold">PE</text>
+<!-- 7 pins right socket (orange glow = charging) -->
+<circle cx="367" cy="692" r="9"  fill="#141414" stroke="#383838" stroke-width="1.5"/>
+<circle cx="367" cy="692" r="4"  fill="#888888"/>
+<circle cx="365" cy="690" r="1.5" fill="#DDDDDD" opacity="0.8"/>
+<circle cx="382" cy="692" r="11" fill="#141414" stroke="#404040" stroke-width="1.5"/>
+<circle cx="382" cy="692" r="5"  fill="#909090"/>
+<circle cx="380" cy="690" r="2"  fill="#E8E8E8" opacity="0.8"/>
+<circle cx="397" cy="692" r="9"  fill="#141414" stroke="#383838" stroke-width="1.5"/>
+<circle cx="397" cy="692" r="4"  fill="#888888"/>
+<circle cx="395" cy="690" r="1.5" fill="#DDDDDD" opacity="0.8"/>
+<circle cx="362" cy="724" r="15" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="362" cy="724" r="7"  fill="#909090"/>
+<circle cx="359" cy="721" r="2.5" fill="#E0E0E0" opacity="0.75"/>
+<circle cx="402" cy="724" r="15" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="402" cy="724" r="7"  fill="#909090"/>
+<circle cx="399" cy="721" r="2.5" fill="#E0E0E0" opacity="0.75"/>
+<circle cx="367" cy="762" r="16" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="367" cy="762" r="7"  fill="#A07030"/>
+<circle cx="364" cy="759" r="2.5" fill="#FFD090" opacity="0.9"/><!-- charging pin warm -->
+<circle cx="397" cy="762" r="16" fill="#141414" stroke="#404040" stroke-width="1.8"/>
+<circle cx="397" cy="762" r="7"  fill="#A07030"/>
+<circle cx="394" cy="759" r="2.5" fill="#FFD090" opacity="0.9"/>
+<rect x="366" y="782" width="32" height="7" rx="3" fill="#1A1A1A" stroke="#383838" stroke-width="1"/>
+<text x="382" y="788" text-anchor="middle" fill="#707070" font-family="'Space Mono',monospace" font-size="5.5">LOCK</text>
+<rect x="359" y="640" width="46" height="5" rx="2.5" fill="#FF8C00" opacity="0.8" filter="url(#glowS)"/>
+<text x="382" y="800" text-anchor="middle" fill="#D06000" font-family="'Space Mono',monospace" font-size="8" font-weight="700">BUSY · 6.8kW</text>
+
+<!-- ── DISPLAY/UI PANEL (pole front face integrated) ── -->
+<rect x="250" y="650" width="60" height="100" rx="6" fill="#0A1420" stroke="#1A3A6A" stroke-width="1.5"/>
+<rect x="253" y="654" width="54" height="60" rx="4" fill="#020810"/>
+<!-- Screen content -->
+<text x="280" y="668" text-anchor="middle" fill="#00E5A0" font-family="'Space Mono',monospace" font-size="6.5" font-weight="700">LUMIS EV</text>
+<text x="280" y="682" text-anchor="middle" fill="#00C888" font-family="'Space Mono',monospace" font-size="10" font-weight="700">6.8</text>
+<text x="280" y="690" text-anchor="middle" fill="#1A6A50" font-family="'Space Mono',monospace" font-size="6">kW · V2G</text>
+<rect x="255" y="696" width="50" height="12" rx="2" fill="#0A1A30"/>
+<text x="280" y="705" text-anchor="middle" fill="#4A9AFF" font-family="'Space Mono',monospace" font-size="6">8.4kWh · 00:41</text>
+<!-- RFID area -->
+<rect x="253" y="720" width="54" height="22" rx="3" fill="#0E1A2E" stroke="#2A4060" stroke-width="0.8"/>
+<circle cx="266" cy="731" r="5"  fill="none" stroke="#4A9AFF" stroke-width="1.2"/>
+<circle cx="266" cy="731" r="9"  fill="none" stroke="#4A9AFF" stroke-width="0.8" opacity="0.5"/>
+<circle cx="266" cy="731" r="2.5" fill="#4A9AFF"/>
+<text x="291" y="728" text-anchor="middle" fill="#4A9AFF" font-family="'Space Mono',monospace" font-size="6" font-weight="700">RFID</text>
+<text x="291" y="737" text-anchor="middle" fill="#2A5A9A" font-family="'Space Mono',monospace" font-size="5.5">NFC · EMV</text>
+<!-- Callout to display -->
+<line x1="310" y1="695" x2="400" y2="660" stroke="#2A5A9A" stroke-width="0.8" stroke-dasharray="4,3"/>
+<text x="405" y="657" fill="#2A5A9A" font-family="'Space Mono',monospace" font-size="7.5">Display 4" touch</text>
+<text x="405" y="667" fill="#2A5A9A" font-family="'Space Mono',monospace" font-size="7">RFID · Card · OCPP</text>
+
+<!-- ── INTERNAL CABLE CHANNEL INDICATORS ── -->
+<!-- Cable run line inside pole -->
+<line x1="279" y1="700" x2="279" y2="800" stroke="#4A9AFF" stroke-width="1.5" stroke-dasharray="5,3"/>
+<line x1="281" y1="700" x2="281" y2="800" stroke="#FF8C00" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+<!-- ── LAMP ARM ── -->
+<line x1="290" y1="88" x2="400" y2="58" stroke-linecap="round" stroke-linejoin="round" stroke="url(#arm)" stroke-width="8"/>
+<rect x="288" y="82" width="22" height="14" rx="4" fill="url(#arm)" stroke="#B0C0D0" stroke-width="1"/>
+
+<!-- ── LED LUMINAIRE ── -->
+<rect x="365" y="36" width="80" height="30" rx="8" fill="url(#ledHead)" stroke="#3A4A5A" stroke-width="1.5"/>
+<rect x="370" y="40" width="70" height="18" rx="5" fill="#FFFFF0" opacity="0.9" filter="url(#glow)"/>
+<!-- LED glow under luminaire -->
+<ellipse cx="405" cy="72" rx="55" ry="22" fill="url(#ledGlow)"/>
+<text x="405" y="82" text-anchor="middle" fill="#B0A020" font-family="'Space Mono',monospace" font-size="7.5">LED 80W</text>
+
+<!-- ── CONNECTIVITY (antenna top) ── -->
+<rect x="275" y="74" width="30" height="18" rx="5" fill="#1A2A3A" stroke="#2A3A4A" stroke-width="1"/>
+<text x="290" y="87" text-anchor="middle" fill="#4A9AFF" font-family="'Space Mono',monospace" font-size="8">📡</text>
+<line x1="290" y1="74" x2="290" y2="88" stroke="#2A3A4A" stroke-width="1" stroke-dasharray="2,2"/>
+<text x="338" y="68" fill="#6A8ABB" font-family="'Space Mono',monospace" font-size="7.5">4G / LoRa</text>
+
+<!-- ── DIMENSION ANNOTATIONS ── -->
+<!-- Total height -->
+<line x1="456" y1="88" x2="456" y2="784" stroke="#8A6A00" stroke-width="1"/>
+<line x1="450" y1="88" x2="462" y2="88" stroke="#8A6A00" stroke-width="1.5"/>
+<line x1="450" y1="784" x2="462" y2="784" stroke="#8A6A00" stroke-width="1.5"/>
+<text x="468" y="440" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="9" transform="rotate(90,468,440)">H = 8,0 m</text>
+
+<!-- EV module height callout -->
+<line x1="148" y1="636" x2="95" y2="636" stroke="#5A9A70" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="148" y1="784" x2="95" y2="784" stroke="#5A9A70" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="95" y1="636" x2="95" y2="784" stroke="#5A9A70" stroke-width="1"/>
+<line x1="89" y1="636" x2="101" y2="636" stroke="#5A9A70" stroke-width="1.5"/>
+<line x1="89" y1="784" x2="101" y2="784" stroke="#5A9A70" stroke-width="1.5"/>
+<text x="83" y="714" text-anchor="middle" fill="#5A9A70" font-family="'Space Mono',monospace" font-size="8" transform="rotate(-90,83,714)">h = 0.9–1.5m</text>
+
+<!-- Module width callout -->
+<line x1="150" y1="632" x2="410" y2="632" stroke="#8A6A00" stroke-width="1"/>
+<line x1="150" y1="626" x2="150" y2="638" stroke="#8A6A00" stroke-width="1.5"/>
+<line x1="410" y1="626" x2="410" y2="638" stroke="#8A6A00" stroke-width="1.5"/>
+<text x="280" y="626" text-anchor="middle" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="8.5">700 mm (modulo EV)</text>
+
+<!-- Pole diameter callout -->
+<line x1="240" y1="580" x2="320" y2="580" stroke="#1A55A8" stroke-width="1"/>
+<line x1="240" y1="574" x2="240" y2="586" stroke="#1A55A8" stroke-width="1.5"/>
+<line x1="320" y1="574" x2="320" y2="586" stroke="#1A55A8" stroke-width="1.5"/>
+<text x="280" y="573" text-anchor="middle" fill="#1A55A8" font-family="'Space Mono',monospace" font-size="8">Ø 114 mm</text>
+
+<!-- Ground level callout -->
+<line x1="456" y1="784" x2="456" y2="855" stroke="#8A6A00" stroke-width="0.8" stroke-dasharray="4,3"/>
+<text x="468" y="820" fill="#8A9AAA" font-family="'Space Mono',monospace" font-size="7.5">± 0.00</text>
+
+<!-- Label: EV module -->
+<line x1="148" y1="700" x2="60" y2="700" stroke="#006A48" stroke-width="0.8" stroke-dasharray="4,3"/>
+<circle cx="60" cy="700" r="3.5" fill="#006A48"/>
+<text x="55" y="692" text-anchor="end" fill="#006A48" font-family="'Space Mono',monospace" font-size="8" font-weight="700">MODULO EV</text>
+<text x="55" y="703" text-anchor="end" fill="#3A8A60" font-family="'Space Mono',monospace" font-size="7">Type 2 · 7kW · V2G</text>
+
+<!-- Label: LED -->
+<line x1="365" y1="51" x2="340" y2="40" stroke="#8A6A00" stroke-width="0.8" stroke-dasharray="4,3"/>
+<circle cx="340" cy="40" r="3" fill="#8A6A00"/>
+<text x="335" y="34" text-anchor="end" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="7.5">Corpo LED</text>
+<text x="335" y="44" text-anchor="end" fill="#AA8A20" font-family="'Space Mono',monospace" font-size="7">80W · 10.000lm</text>
+
+<!-- Label: smart meter -->
+<line x1="405" y1="744" x2="456" y2="744" stroke="#2A5A9A" stroke-width="0.8" stroke-dasharray="4,3"/>
+<circle cx="456" cy="744" r="3" fill="#2A5A9A"/>
+<text x="460" y="741" fill="#2A5A9A" font-family="'Space Mono',monospace" font-size="7.5">Quadro base</text>
+<text x="460" y="751" fill="#2A5A9A" font-family="'Space Mono',monospace" font-size="7">MID bidirezionale</text>
+
+</svg>
+
+</div>
+</div>
+
+<div>
+<!-- RIGHT COLUMN: Specs + Features -->
+<div class="card" style="margin-bottom:20px">
+<div class="card-title">STRUTTURA PALO</div>
+<div class="spec-group">
+<div class="spec-group-title">GEOMETRIA</div>
+<div class="spec-row"><span class="spec-k">Altezza fusto</span><span class="spec-v accent">8,0 m</span></div>
+<div class="spec-row"><span class="spec-k">Diametro base</span><span class="spec-v">Ø 114 mm</span></div>
+<div class="spec-row"><span class="spec-k">Diametro sommità</span><span class="spec-v">Ø 60 mm</span></div>
+<div class="spec-row"><span class="spec-k">Materiale</span><span class="spec-v">Al 6082-T6 estruso</span></div>
+<div class="spec-row"><span class="spec-k">Finitura</span><span class="spec-v">Anodizzato grigio RAL 7016</span></div>
+<div class="spec-row"><span class="spec-k">Norma strutturale</span><span class="spec-v">UNI EN 40-3-3</span></div>
+</div>
+<div class="spec-group">
+<div class="spec-group-title">ILLUMINAZIONE</div>
+<div class="spec-row"><span class="spec-k">Sorgente</span><span class="spec-v">LED 80W · 10.000 lm</span></div>
+<div class="spec-row"><span class="spec-k">Efficienza</span><span class="spec-v">125 lm/W</span></div>
+<div class="spec-row"><span class="spec-k">Temperatura colore</span><span class="spec-v">4.000 K neutro</span></div>
+<div class="spec-row"><span class="spec-k">CRI</span><span class="spec-v">> 80</span></div>
+<div class="spec-row"><span class="spec-k">Controllo</span><span class="spec-v">DALI-2 / 0-10V</span></div>
+</div>
+<div class="spec-group">
+<div class="spec-group-title">CABLAGGIO INTERNO</div>
+<div class="spec-row"><span class="spec-k">Cavità integrata</span><span class="spec-v accent">sì (extruded)</span></div>
+<div class="spec-row"><span class="spec-k">Illuminazione</span><span class="spec-v">2×2,5 mm² Cu</span></div>
+<div class="spec-row"><span class="spec-k">Ricarica EV</span><span class="spec-v">2×(3×10mm²+PE)</span></div>
+<div class="spec-row"><span class="spec-k">Dati</span><span class="spec-v">Cat.6A shielded</span></div>
+<div class="spec-row"><span class="spec-k">Ingresso base</span><span class="spec-v">Cavidotto Ø 110mm</span></div>
+</div>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+<div class="card-title">MODULO RICARICA EV</div>
+<div class="spec-group">
+<div class="spec-group-title">PRESTAZIONI</div>
+<div class="spec-row"><span class="spec-k">Potenza per presa</span><span class="spec-v accent">1 – 7 kW</span></div>
+<div class="spec-row"><span class="spec-k">Prese totali</span><span class="spec-v accent">2× Type 2 laterali</span></div>
+<div class="spec-row"><span class="spec-k">Potenza max totale</span><span class="spec-v accent">14 kW</span></div>
+<div class="spec-row"><span class="spec-k">Alimentazione</span><span class="spec-v">230V · 1P+N · 32A</span></div>
+<div class="spec-row"><span class="spec-k">V2G</span><span class="spec-v blue">Predisposto ISO 15118-20</span></div>
+<div class="spec-row"><span class="spec-k">Scalabilità</span><span class="spec-v">Remota via OCPP</span></div>
+</div>
+<div class="spec-group">
+<div class="spec-group-title">INTEGRAZIONE</div>
+<div class="spec-row"><span class="spec-k">Montaggio</span><span class="spec-v accent">Integrato by design</span></div>
+<div class="spec-row"><span class="spec-k">Cavi</span><span class="spec-v">Interni al fusto</span></div>
+<div class="spec-row"><span class="spec-k">Modulo altezza</span><span class="spec-v">h = 0,9–1,5 m</span></div>
+<div class="spec-row"><span class="spec-k">Larghezza modulo</span><span class="spec-v">700 mm</span></div>
+<div class="spec-row"><span class="spec-k">Protezione</span><span class="spec-v">IP54 · IK10</span></div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">SMART SYSTEM</div>
+<div class="spec-row"><span class="spec-k">Protocollo</span><span class="spec-v">OCPP 2.0.1</span></div>
+<div class="spec-row"><span class="spec-k">Connettività</span><span class="spec-v">4G + LoRa + ETH</span></div>
+<div class="spec-row"><span class="spec-k">Autenticazione</span><span class="spec-v">RFID · App · P&amp;C</span></div>
+<div class="spec-row"><span class="spec-k">Pagamento</span><span class="spec-v">EMV contactless</span></div>
+<div class="spec-row"><span class="spec-k">Contatore</span><span class="spec-v">MID bidirezionale</span></div>
+<div class="spec-row"><span class="spec-k">Illuminazione smart</span><span class="spec-v">DALI-2 dimming</span></div>
+<div class="features">
+<span class="feat feat-g">V2G Ready</span>
+<span class="feat feat-g">OCPP 2.0.1</span>
+<span class="feat feat-b">ISO 15118-20</span>
+<span class="feat feat-b">Smart metering</span>
+<span class="feat feat-g">OTA update</span>
+<span class="feat feat-a">MID certified</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 1: MODULO RICARICA ══════════════ -->
+<div class="panel" id="p1">
+<div class="cp-banner">
+  <div>⚡ <b>© 2026 POLARIS Platform</b> &nbsp;·&nbsp; Tutti i diritti riservati &nbsp;·&nbsp; <b>CONFIDENZIALE</b> &nbsp;·&nbsp; Non divulgare senza autorizzazione scritta</div>
+  <div class="cp-right">POLARIS EV System &nbsp;·&nbsp; Patent Pending &nbsp;·&nbsp; Rev. 2.0 &nbsp;·&nbsp; Maggio 2026</div>
+</div>
+<p class="page-title">Modulo Ricarica Integrato</p>
+<p class="page-desc">Il modulo di ricarica è parte integrante della struttura del palo — non un accessorio aggiunto. Corpo in alluminio estruso con cavità dedicate per cavi, elettronica e prese.</p>
+
+<div class="g2" style="margin-bottom:24px">
+<div class="card">
+<div class="card-title">PRESE TYPE 2 — VISTA FRONTALE REALISTICA · IEC 62196-2</div>
+<svg viewBox="0 0 520 430" style="width:100%;display:block;background:#1A1E28;border-radius:8px" role="img">
+<title>Prese Type 2 IEC 62196-2 — rendering reale</title>
+<style>.pl{font-family:monospace;font-size:8px;fill:#555;font-weight:bold}.ct{font-family:monospace;font-size:9px}</style>
+
+<!-- Polo fusto (strip centrale) -->
+<rect x="204" y="0" width="112" height="430" fill="#B8C8D8" stroke="#A0B0C0" stroke-width="1"/>
+<rect x="236" y="0" width="48" height="430" fill="#D8E8F0" opacity="0.4"/>
+<text x="260" y="218" text-anchor="middle" fill="#7A90A8" font-family="monospace" font-size="7" transform="rotate(-90,260,218)">FUSTO Al Ø114mm</text>
+
+<!-- PRESA A — sx (libera) -->
+<rect x="14" y="30" width="192" height="360" rx="12" fill="#1E2E24" stroke="#00A870" stroke-width="2"/>
+<rect x="15" y="31" width="190" height="358" rx="11" fill="none" stroke="#fff" stroke-width="0.4" opacity="0.08"/>
+<rect x="28" y="36" width="164" height="5" rx="2.5" fill="#00CC70" opacity="0.85"/>
+<text x="110" y="55" text-anchor="middle" fill="#00E5A0" font-family="monospace" font-size="9" font-weight="bold">PRESA A · FREE</text>
+
+<!-- Socket A shape (D reale) -->
+<path d="M110,68 C126,68 142,73 150,83 C158,94 159,107 157,120 C155,132 150,140 150,150 C150,161 157,172 158,182 C159,193 156,205 148,214 C140,223 127,228 110,228 C93,228 80,223 72,214 C64,205 61,193 62,182 C63,172 70,161 70,150 C70,140 65,132 63,120 C61,107 62,94 70,83 C78,73 94,68 110,68 Z" fill="#2C2C2C" stroke="#484848" stroke-width="1.5"/>
+<path d="M92,71 C98,68 122,68 128,71 C135,75 144,84 146,93 C140,85 133,78 126,74 C118,69 102,69 94,74 C86,78 79,85 74,93 C76,84 85,75 92,71 Z" fill="#4A4A4A" opacity="0.7"/>
+<!-- 7 PINS A -->
+<circle cx="97" cy="85"  r="12" fill="#111"/><circle cx="97" cy="85"  r="10" fill="#1A1A1A"/><circle cx="97" cy="85"  r="7"  fill="#080808"/><circle cx="94" cy="82"  r="2"  fill="#303030"/><circle cx="97" cy="85"  r="3"  fill="#6A6050"/><circle cx="96" cy="84"  r="1"  fill="#B0A080"/>
+<circle cx="110" cy="80" r="14" fill="#111"/><circle cx="110" cy="80" r="12" fill="#1A1A1A"/><circle cx="110" cy="80" r="9"  fill="#080808"/><circle cx="107" cy="77" r="2.5" fill="#303030"/><circle cx="110" cy="80" r="4"  fill="#6A6050"/><circle cx="109" cy="79" r="1.2" fill="#B0A080"/>
+<circle cx="123" cy="85" r="12" fill="#111"/><circle cx="123" cy="85" r="10" fill="#1A1A1A"/><circle cx="123" cy="85" r="7"  fill="#080808"/><circle cx="120" cy="82" r="2"  fill="#303030"/><circle cx="123" cy="85" r="3"  fill="#7A7A7A"/><circle cx="122" cy="84" r="1"  fill="#D0D0D0"/>
+<circle cx="88"  cy="140" r="20" fill="#111"/><circle cx="88" cy="140" r="17" fill="#181818"/><circle cx="88" cy="140" r="14" fill="#080808"/><circle cx="84" cy="136" r="4"  fill="#2E2E2E"/><circle cx="88" cy="140" r="6"  fill="#6A6A6A"/><circle cx="86" cy="138" r="2"  fill="#C8C8C8"/>
+<circle cx="132" cy="140" r="20" fill="#111"/><circle cx="132" cy="140" r="17" fill="#181818"/><circle cx="132" cy="140" r="14" fill="#080808"/><circle cx="128" cy="136" r="4"  fill="#2E2E2E"/><circle cx="132" cy="140" r="6"  fill="#6A6A6A"/><circle cx="130" cy="138" r="2"  fill="#C8C8C8"/>
+<circle cx="93"  cy="197" r="22" fill="#111"/><circle cx="93" cy="197" r="19" fill="#181818"/><circle cx="93" cy="197" r="15" fill="#080808"/><circle cx="89" cy="193" r="4.5" fill="#2A2A2A"/><circle cx="93" cy="197" r="7"  fill="#6A6A6A"/><circle cx="91" cy="195" r="2.5" fill="#C8C8C8"/>
+<circle cx="127" cy="197" r="22" fill="#111"/><circle cx="127" cy="197" r="19" fill="#181818"/><circle cx="127" cy="197" r="15" fill="#080808"/><circle cx="123" cy="193" r="4.5" fill="#2A2A2A"/><circle cx="127" cy="197" r="7"  fill="#6A6A6A"/><circle cx="125" cy="195" r="2.5" fill="#C8C8C8"/>
+<!-- labels A -->
+<text x="88" y="82"  class="pl">PP</text><text x="102" y="77" class="pl">PE</text><text x="116" y="82" class="pl">CP</text>
+<text x="73" y="140" class="pl">L1</text><text x="137" y="140" class="pl">N</text>
+<text x="76" y="197" class="pl">L2</text><text x="132" y="197" class="pl">L3</text>
+<rect x="88" y="225" width="44" height="8" rx="3" fill="#1A1A1A" stroke="#333" stroke-width="0.8"/>
+<text x="110" y="231" text-anchor="middle" fill="#555" style="font-size:7px;font-family:monospace">LOCK · FREE</text>
+<text x="110" y="264" text-anchor="middle" fill="#00C888" font-family="monospace" font-size="18" font-weight="bold">0.0 kW</text>
+<!-- callouts A -->
+<line x1="86" y1="78" x2="18" y2="58" stroke="#7A6A40" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="14" y="55" text-anchor="end" fill="#7A6A40" class="ct" font-weight="bold">PP</text>
+<line x1="134" y1="78" x2="200" y2="58" stroke="#7A6A40" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="204" y="55" fill="#7A6A40" class="ct" font-weight="bold">CP</text>
+<line x1="110" y1="66" x2="110" y2="48" stroke="#5A9A70" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="110" y="44" text-anchor="middle" fill="#5A9A70" class="ct" font-weight="bold">PE</text>
+<line x1="70" y1="140" x2="18" y2="140" stroke="#2A5A9A" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="14" y="137" text-anchor="end" fill="#2A5A9A" class="ct" font-weight="bold">L1</text>
+<line x1="152" y1="140" x2="200" y2="140" stroke="#2A5A9A" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="204" y="137" fill="#2A5A9A" class="ct" font-weight="bold">N</text>
+<line x1="73" y1="197" x2="18" y2="210" stroke="#2A5A9A" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="14" y="207" text-anchor="end" fill="#2A5A9A" class="ct" font-weight="bold">L2</text>
+<line x1="147" y1="197" x2="200" y2="210" stroke="#2A5A9A" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="204" y="207" fill="#2A5A9A" class="ct" font-weight="bold">L3</text>
+
+<!-- PRESA B — dx (in carica) -->
+<rect x="314" y="30" width="192" height="360" rx="12" fill="#1A1200" stroke="#FF8C00" stroke-width="2"/>
+<rect x="315" y="31" width="190" height="358" rx="11" fill="none" stroke="#fff" stroke-width="0.4" opacity="0.08"/>
+<rect x="328" y="36" width="164" height="5" rx="2.5" fill="#FF8C00" opacity="0.85"/>
+<text x="410" y="55" text-anchor="middle" fill="#FF8C00" font-family="monospace" font-size="9" font-weight="bold">PRESA B · 6.8 kW</text>
+
+<!-- Socket B shape (D reale) -->
+<path d="M410,68 C426,68 442,73 450,83 C458,94 459,107 457,120 C455,132 450,140 450,150 C450,161 457,172 458,182 C459,193 456,205 448,214 C440,223 427,228 410,228 C393,228 380,223 372,214 C364,205 361,193 362,182 C363,172 370,161 370,150 C370,140 365,132 363,120 C361,107 362,94 370,83 C378,73 394,68 410,68 Z" fill="#2C2C2C" stroke="#484848" stroke-width="1.5"/>
+<path d="M392,71 C398,68 422,68 428,71 C435,75 444,84 446,93 C440,85 433,78 426,74 C418,69 402,69 394,74 C386,78 379,85 374,93 C376,84 385,75 392,71 Z" fill="#4A4A4A" opacity="0.7"/>
+<!-- Warm orange charge glow -->
+<circle cx="410" cy="160" r="90" fill="#FF8C00" opacity="0.05"/>
+<!-- 7 PINS B (charging = warm golden pins) -->
+<circle cx="397" cy="85"  r="12" fill="#111"/><circle cx="397" cy="85"  r="10" fill="#1A1A1A"/><circle cx="397" cy="85"  r="7"  fill="#080808"/><circle cx="394" cy="82"  r="2"  fill="#303030"/><circle cx="397" cy="85"  r="3"  fill="#7A7A7A"/><circle cx="396" cy="84"  r="1"  fill="#D0D0D0"/>
+<circle cx="410" cy="80" r="14" fill="#111"/><circle cx="410" cy="80" r="12" fill="#1A1A1A"/><circle cx="410" cy="80" r="9"  fill="#080808"/><circle cx="407" cy="77" r="2.5" fill="#303030"/><circle cx="410" cy="80" r="4"  fill="#6A6050"/><circle cx="409" cy="79" r="1.2" fill="#B0A080"/>
+<circle cx="423" cy="85" r="12" fill="#111"/><circle cx="423" cy="85" r="10" fill="#1A1A1A"/><circle cx="423" cy="85" r="7"  fill="#080808"/><circle cx="420" cy="82" r="2"  fill="#303030"/><circle cx="423" cy="85" r="3"  fill="#7A7A7A"/><circle cx="422" cy="84" r="1"  fill="#D0D0D0"/>
+<circle cx="388" cy="140" r="20" fill="#111"/><circle cx="388" cy="140" r="17" fill="#181818"/><circle cx="388" cy="140" r="14" fill="#080808"/><circle cx="384" cy="136" r="4"  fill="#2E2E2E"/><circle cx="388" cy="140" r="6"  fill="#7A5A30"/><circle cx="386" cy="138" r="2"  fill="#DDA060"/>
+<circle cx="432" cy="140" r="20" fill="#111"/><circle cx="432" cy="140" r="17" fill="#181818"/><circle cx="432" cy="140" r="14" fill="#080808"/><circle cx="428" cy="136" r="4"  fill="#2E2E2E"/><circle cx="432" cy="140" r="6"  fill="#7A5A30"/><circle cx="430" cy="138" r="2"  fill="#DDA060"/>
+<circle cx="393" cy="197" r="22" fill="#111"/><circle cx="393" cy="197" r="19" fill="#181818"/><circle cx="393" cy="197" r="15" fill="#080808"/><circle cx="389" cy="193" r="4.5" fill="#2A2A2A"/><circle cx="393" cy="197" r="7"  fill="#7A5A30"/><circle cx="391" cy="195" r="2.5" fill="#DDA060"/>
+<circle cx="427" cy="197" r="22" fill="#111"/><circle cx="427" cy="197" r="19" fill="#181818"/><circle cx="427" cy="197" r="15" fill="#080808"/><circle cx="423" cy="193" r="4.5" fill="#2A2A2A"/><circle cx="427" cy="197" r="7"  fill="#7A5A30"/><circle cx="425" cy="195" r="2.5" fill="#DDA060"/>
+<!-- labels B -->
+<text x="388" y="82"  class="pl">PP</text><text x="402" y="77" class="pl">PE</text><text x="416" y="82" class="pl">CP</text>
+<text x="373" y="140" class="pl">L1</text><text x="437" y="140" class="pl">N</text>
+<text x="376" y="197" class="pl">L2</text><text x="432" y="197" class="pl">L3</text>
+<rect x="388" y="225" width="44" height="8" rx="3" fill="#1A1A1A" stroke="#333" stroke-width="0.8"/>
+<text x="410" y="231" text-anchor="middle" fill="#555" style="font-size:7px;font-family:monospace">LOCK · BUSY</text>
+<text x="410" y="264" text-anchor="middle" fill="#D06000" font-family="monospace" font-size="18" font-weight="bold">6.8 kW</text>
+
+<!-- LEGENDA -->
+<text x="260" y="300" text-anchor="middle" fill="#7A9A8A" font-family="monospace" font-size="9" font-weight="bold">IEC 62196-2</text>
+<text x="260" y="312" text-anchor="middle" fill="#5A7A6A" font-family="monospace" font-size="8">7 contatti · Type 2</text>
+<line x1="220" y1="320" x2="300" y2="320" stroke="#333" stroke-width="0.8"/>
+<circle cx="228" cy="332" r="5" fill="#111"/><circle cx="228" cy="332" r="3" fill="#6A6050"/>
+<text x="236" y="335" fill="#5A7A6A" font-family="monospace" font-size="7">PE - terra (ottone)</text>
+<circle cx="228" cy="348" r="5" fill="#111"/><circle cx="228" cy="348" r="3" fill="#7A7A7A"/>
+<text x="236" y="351" fill="#5A7A6A" font-family="monospace" font-size="7">L1/N/L2/L3 - potenza</text>
+<circle cx="228" cy="364" r="5" fill="#111"/><circle cx="228" cy="364" r="3" fill="#7A5A30"/>
+<text x="236" y="367" fill="#C06000" font-family="monospace" font-size="7">Pin dorati = corrente attiva</text>
+
+<!-- Footers -->
+<text x="110" y="408" text-anchor="middle" fill="#3A7A60" font-family="monospace" font-size="9">Presa A · Fianco sx · FREE</text>
+<text x="410" y="408" text-anchor="middle" fill="#9A5A20" font-family="monospace" font-size="9">Presa B · Fianco dx · V2G ON</text>
+</svg>
+</div>
+
+<div class="card">
+<div class="card-title">COMPONENTI MODULO INTEGRATO</div>
+<div class="spec-group">
+<div class="spec-group-title">STRUTTURA</div>
+<div class="spec-row"><span class="spec-k">Corpo</span><span class="spec-v accent">Al 6082-T6 estruso</span></div>
+<div class="spec-row"><span class="spec-k">Sezione prese</span><span class="spec-v">Ø 80 mm (alloggio T2)</span></div>
+<div class="spec-row"><span class="spec-k">Larghezza totale</span><span class="spec-v">700 mm</span></div>
+<div class="spec-row"><span class="spec-k">Altezza modulo</span><span class="spec-v">250 mm</span></div>
+<div class="spec-row"><span class="spec-k">Profilo fusto</span><span class="spec-v">Integrato Ø 114mm</span></div>
+</div>
+<div class="spec-group">
+<div class="spec-group-title">ELETTRONICA</div>
+<div class="spec-row"><span class="spec-k">PCB EVSE</span><span class="spec-v">1 per presa</span></div>
+<div class="spec-row"><span class="spec-k">MCB</span><span class="spec-v">2P 32A · curva C</span></div>
+<div class="spec-row"><span class="spec-k">RCD</span><span class="spec-v">30mA tipo B (V2G)</span></div>
+<div class="spec-row"><span class="spec-k">SPD</span><span class="spec-v">Tipo 2 · classe II</span></div>
+<div class="spec-row"><span class="spec-k">Contatore</span><span class="spec-v">MID bidirezionale</span></div>
+</div>
+<div class="spec-group">
+<div class="spec-group-title">INTERFACCIA</div>
+<div class="spec-row"><span class="spec-k">Display</span><span class="spec-v">4" IPS 480px touch</span></div>
+<div class="spec-row"><span class="spec-k">RFID/NFC</span><span class="spec-v">13.56 MHz · ISO 14443</span></div>
+<div class="spec-row"><span class="spec-k">Pagamento</span><span class="spec-v">EMV contactless PCI-L1</span></div>
+<div class="spec-row"><span class="spec-k">LED status</span><span class="spec-v">Strip RGB per presa</span></div>
+</div>
+<div class="callout callout-green">
+  <strong>⟳ V2G PREDISPOSTO</strong>
+  RCD tipo B obbligatorio per V2G. Contatore MID bidirezionale misura sia l'energia erogata che quella restituita alla rete. Abilitazione via firmware OTA + accordo DSO locale.
+</div>
+</div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 2: SEZIONI ══════════════ -->
+<div class="panel" id="p2">
+<div class="cp-banner">
+  <div>⚡ <b>© 2026 POLARIS Platform</b> &nbsp;·&nbsp; Tutti i diritti riservati &nbsp;·&nbsp; <b>CONFIDENZIALE</b> &nbsp;·&nbsp; Non divulgare senza autorizzazione scritta</div>
+  <div class="cp-right">POLARIS EV System &nbsp;·&nbsp; Patent Pending &nbsp;·&nbsp; Rev. 2.0 &nbsp;·&nbsp; Maggio 2026</div>
+</div>
+<p class="page-title">Sezioni Tecniche</p>
+<p class="page-desc">Sezione orizzontale del fusto con cavità cavi integrate e sezione verticale della zona modulo EV.</p>
+
+<div class="g2">
+<div class="card">
+<div class="card-title">SEZIONE TRASVERSALE FUSTO — QUOTA h=2m</div>
+<svg viewBox="0 0 380 380" style="width:100%;display:block">
+<defs>
+  <linearGradient id="alShell" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#909AA8"/>
+    <stop offset="25%"  stop-color="#C8D4E0"/>
+    <stop offset="45%"  stop-color="#E8F0F8"/>
+    <stop offset="50%"  stop-color="#F4F8FC"/>
+    <stop offset="55%"  stop-color="#E0EAF4"/>
+    <stop offset="75%"  stop-color="#B8C8D8"/>
+    <stop offset="100%" stop-color="#8090A0"/>
+  </linearGradient>
+  <linearGradient id="alInner" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#D0DCE8"/>
+    <stop offset="50%"  stop-color="#E8F2FA"/>
+    <stop offset="100%" stop-color="#C8D8E8"/>
+  </linearGradient>
+</defs>
+<!-- Outer ring (aluminium wall, 4mm) -->
+<circle cx="190" cy="190" r="150" fill="url(#alShell)" stroke="#8090A0" stroke-width="2"/>
+<!-- Inner cavity (hollow) -->
+<circle cx="190" cy="190" r="132" fill="url(#alInner)"/>
+<!-- Wall thickness labels -->
+<line x1="190" y1="40" x2="190" y2="58" stroke="#8A6A00" stroke-width="1.5"/>
+<text x="190" y="34" text-anchor="middle" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="8">t = 4mm</text>
+
+<!-- CABLE CHANNELS (extruded into wall) -->
+<!-- Channel 1: Illumination (upper-left) -->
+<ellipse cx="148" cy="108" rx="18" ry="14" fill="#E8F4E8" stroke="#006A48" stroke-width="2"/>
+<text x="148" y="112" text-anchor="middle" fill="#006A48" font-family="'Space Mono',monospace" font-size="7" font-weight="700">LED</text>
+<!-- 2 small wires inside -->
+<circle cx="142" cy="107" r="4" fill="#CC3333"/><circle cx="142" cy="107" r="2" fill="#880000"/>
+<circle cx="154" cy="107" r="4" fill="#1A1A1A"/><circle cx="154" cy="107" r="2" fill="#000000"/>
+
+<!-- Channel 2: EV A (upper-right) -->
+<ellipse cx="232" cy="108" rx="18" ry="14" fill="#E8F0FA" stroke="#1A55A8" stroke-width="2"/>
+<text x="232" y="105" text-anchor="middle" fill="#1A55A8" font-family="'Space Mono',monospace" font-size="6.5">PRESA A</text>
+<circle cx="222" cy="111" r="4" fill="#CC6600"/><circle cx="222" cy="111" r="2" fill="#883300"/>
+<circle cx="232" cy="111" r="4" fill="#1A1A1A"/><circle cx="232" cy="111" r="2" fill="#000"/>
+<circle cx="242" cy="111" r="4" fill="#808080"/><circle cx="242" cy="111" r="2" fill="#404040"/>
+
+<!-- Channel 3: EV B (upper-centre) -->
+<ellipse cx="190" cy="84" rx="18" ry="14" fill="#FFF0E8" stroke="#C06000" stroke-width="2"/>
+<text x="190" y="81" text-anchor="middle" fill="#C06000" font-family="'Space Mono',monospace" font-size="6.5">PRESA B</text>
+<circle cx="180" cy="87" r="4" fill="#CC6600"/><circle cx="180" cy="87" r="2" fill="#883300"/>
+<circle cx="190" cy="87" r="4" fill="#1A1A1A"/><circle cx="190" cy="87" r="2" fill="#000"/>
+<circle cx="200" cy="87" r="4" fill="#808080"/><circle cx="200" cy="87" r="2" fill="#404040"/>
+
+<!-- Channel 4: Data / Cat6A (lower) -->
+<ellipse cx="190" cy="296" rx="16" ry="12" fill="#F0E8FA" stroke="#6A2A8A" stroke-width="2"/>
+<text x="190" y="300" text-anchor="middle" fill="#6A2A8A" font-family="'Space Mono',monospace" font-size="7">Cat.6A</text>
+
+<!-- Channel 5: PE / ground bonding (left) -->
+<ellipse cx="76" cy="190" rx="12" ry="16" fill="#FFFCE8" stroke="#8A6A00" stroke-width="2"/>
+<text x="76" y="188" text-anchor="middle" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="7" font-weight="700">PE</text>
+<text x="76" y="197" text-anchor="middle" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="7">16mm²</text>
+
+<!-- Centre void -->
+<circle cx="190" cy="190" r="65" fill="#F0F4F8" stroke="#C8D4E0" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="190" y="187" text-anchor="middle" fill="#A0B0C0" font-family="'Space Mono',monospace" font-size="9">VUOTO</text>
+<text x="190" y="198" text-anchor="middle" fill="#B0C0D0" font-family="'Space Mono',monospace" font-size="8">CENTRALE</text>
+
+<!-- Diameter arrows -->
+<line x1="40" y1="190" x2="340" y2="190" stroke="#8A6A00" stroke-width="1"/>
+<line x1="40"  y1="184" x2="40"  y2="196" stroke="#8A6A00" stroke-width="2"/>
+<line x1="340" y1="184" x2="340" y2="196" stroke="#8A6A00" stroke-width="2"/>
+<text x="190" y="218" text-anchor="middle" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="9" font-weight="700">Ø est. 114 mm</text>
+
+<!-- Wall thick arrow -->
+<line x1="190" y1="340" x2="322" y2="340" stroke="#3A5A7A" stroke-width="1"/>
+<line x1="190" y1="334" x2="190" y2="346" stroke="#3A5A7A" stroke-width="2"/>
+<line x1="322" y1="334" x2="322" y2="346" stroke="#3A5A7A" stroke-width="2"/>
+<text x="256" y="358" text-anchor="middle" fill="#3A5A7A" font-family="'Space Mono',monospace" font-size="8">Ø int. 106 mm · t=4mm</text>
+
+<!-- Legend -->
+<text x="10" y="354" fill="#006A48" font-family="'Space Mono',monospace" font-size="7" font-weight="700">■ LED</text>
+<text x="40" y="354" fill="#1A55A8" font-family="'Space Mono',monospace" font-size="7" font-weight="700">■ EV-A</text>
+<text x="76" y="354" fill="#C06000" font-family="'Space Mono',monospace" font-size="7" font-weight="700">■ EV-B</text>
+<text x="114" y="354" fill="#6A2A8A" font-family="'Space Mono',monospace" font-size="7" font-weight="700">■ Dati</text>
+<text x="148" y="354" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="7" font-weight="700">■ PE</text>
+</svg>
+</div>
+
+<div class="card">
+<div class="card-title">SEZIONE VERTICALE — ZONA MODULO EV · h=0÷1.5m</div>
+<svg viewBox="0 0 340 420" style="width:100%;display:block">
+<defs>
+  <linearGradient id="shaftV" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#B0C0D0"/>
+    <stop offset="30%"  stop-color="#D8E8F0"/>
+    <stop offset="50%"  stop-color="#F0F6FA"/>
+    <stop offset="70%"  stop-color="#D0E0F0"/>
+    <stop offset="100%" stop-color="#A0B0C0"/>
+  </linearGradient>
+  <linearGradient id="modBG" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%"   stop-color="#1E2E24"/>
+    <stop offset="50%"  stop-color="#2E4238"/>
+    <stop offset="100%" stop-color="#1E2E24"/>
+  </linearGradient>
+  <linearGradient id="baseV" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0%"   stop-color="#C8D4E0"/>
+    <stop offset="100%" stop-color="#A0AEB8"/>
+  </linearGradient>
+</defs>
+
+<!-- Ground -->
+<rect x="0" y="380" width="340" height="40" fill="#E8ECF2"/>
+<line x1="0" y1="380" x2="340" y2="380" stroke="#C8D0E0" stroke-width="1.5"/>
+<text x="170" y="400" text-anchor="middle" fill="#A0AAB8" font-family="'Space Mono',monospace" font-size="8">PIANO STRADALE ± 0.00</text>
+
+<!-- Concrete base -->
+<rect x="100" y="340" width="140" height="42" rx="3" fill="url(#baseV)" stroke="#B0BCC8" stroke-width="1.5"/>
+<text x="170" y="365" text-anchor="middle" fill="#7A8A9A" font-family="'Space Mono',monospace" font-size="7.5">FONDAZIONE</text>
+
+<!-- Anchor flange -->
+<rect x="120" y="322" width="100" height="20" rx="5" fill="#B0BCC8" stroke="#9AAABB" stroke-width="1.5"/>
+
+<!-- Shaft -->
+<rect x="148" y="30" width="44" height="294" fill="url(#shaftV)" stroke="#A0B0C0" stroke-width="1.5"/>
+<!-- Shaft highlight -->
+<rect x="149" y="30" width="6" height="294" fill="#FFFFFF" opacity="0.4"/>
+<!-- Internal cable channels (shown as lines) -->
+<line x1="164" y1="30" x2="164" y2="324" stroke="#1A55A8" stroke-width="2" stroke-dasharray="4,3"/>
+<line x1="170" y1="30" x2="170" y2="324" stroke="#C06000" stroke-width="2" stroke-dasharray="4,3"/>
+<line x1="176" y1="30" x2="176" y2="324" stroke="#8A6A00" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="182" y1="30" x2="182" y2="324" stroke="#006A48" stroke-width="1" stroke-dasharray="4,3"/>
+
+<!-- EV MODULE BODY (side view) -->
+<rect x="38" y="160" width="112" height="140" rx="12" fill="url(#modBG)" stroke="#00A870" stroke-width="2.5"/>
+<!-- Connection to shaft -->
+<rect x="148" y="184" width="6" height="92" fill="#1E3028" stroke="#00A870" stroke-width="1"/>
+<!-- LED strip -->
+<rect x="46" y="165" width="96" height="5" rx="2.5" fill="#00E5A0" opacity="0.85"/>
+<!-- Socket visible (side profile) -->
+<circle cx="56" cy="248" r="32" fill="#282828" stroke="#404040" stroke-width="1.5"/>
+<!-- Mennekes pins cross section (simplified side view) -->
+<circle cx="46" cy="242" r="9" fill="#141414" stroke="#383838" stroke-width="1.5"/><circle cx="46" cy="242" r="4" fill="#909090"/>
+<circle cx="56" cy="236" r="11" fill="#141414" stroke="#404040" stroke-width="2"/><circle cx="56" cy="236" r="5" fill="#A0A0A0"/>
+<circle cx="66" cy="242" r="9" fill="#141414" stroke="#383838" stroke-width="1.5"/><circle cx="66" cy="242" r="4" fill="#909090"/>
+<circle cx="44" cy="256" r="10" fill="#141414" stroke="#383838" stroke-width="1.5"/><circle cx="44" cy="256" r="4.5" fill="#909090"/>
+<circle cx="68" cy="256" r="10" fill="#141414" stroke="#383838" stroke-width="1.5"/><circle cx="68" cy="256" r="4.5" fill="#909090"/>
+<circle cx="56" cy="268" r="10" fill="#141414" stroke="#383838" stroke-width="1.5"/><circle cx="56" cy="268" r="4.5" fill="#909090"/>
+<circle cx="56" cy="270" r="3" fill="#909090"/>
+<!-- Lock bar -->
+<rect x="40" y="282" width="32" height="7" rx="3" fill="#1A1A1A" stroke="#383838"/>
+<text x="56" y="288" text-anchor="middle" fill="#606060" font-family="'Space Mono',monospace" font-size="6">LOCK</text>
+<!-- kW read -->
+<text x="112" y="272" text-anchor="middle" fill="#00C888" font-family="'Space Mono',monospace" font-size="12" font-weight="700">0.0</text>
+<text x="112" y="284" text-anchor="middle" fill="#3A9A70" font-family="'Space Mono',monospace" font-size="8">kW FREE</text>
+
+<!-- Smart meter box at base -->
+<rect x="186" y="255" width="80" height="60" rx="8" fill="#1A2A3A" stroke="#2A4A6A" stroke-width="1.5"/>
+<text x="226" y="274" text-anchor="middle" fill="#4A8AB0" font-family="'Space Mono',monospace" font-size="7.5" font-weight="700">QUADRO</text>
+<text x="226" y="284" text-anchor="middle" fill="#3A7A9A" font-family="'Space Mono',monospace" font-size="7">MCB · RCD</text>
+<text x="226" y="294" text-anchor="middle" fill="#3A7A9A" font-family="'Space Mono',monospace" font-size="7">SPD · METER</text>
+<text x="226" y="304" text-anchor="middle" fill="#2A5A7A" font-family="'Space Mono',monospace" font-size="7">IP44 · MID</text>
+
+<!-- Height annotations -->
+<line x1="16" y1="160" x2="16" y2="300" stroke="#5A9A70" stroke-width="1"/>
+<line x1="10" y1="160" x2="22" y2="160" stroke="#5A9A70" stroke-width="1.5"/>
+<line x1="10" y1="300" x2="22" y2="300" stroke="#5A9A70" stroke-width="1.5"/>
+<text x="9" y="233" text-anchor="middle" fill="#5A9A70" font-family="'Space Mono',monospace" font-size="8" transform="rotate(-90,9,233)">h EV</text>
+
+<line x1="290" y1="30" x2="290" y2="380" stroke="#8A6A00" stroke-width="1"/>
+<line x1="284" y1="30" x2="296" y2="30" stroke="#8A6A00" stroke-width="1.5"/>
+<line x1="284" y1="380" x2="296" y2="380" stroke="#8A6A00" stroke-width="1.5"/>
+<text x="305" y="210" text-anchor="middle" fill="#8A6A00" font-family="'Space Mono',monospace" font-size="8" transform="rotate(90,305,210)">H = 8,0 m tot.</text>
+
+<!-- Cable route labels -->
+<text x="158" y="24" fill="#1A55A8" font-family="'Space Mono',monospace" font-size="7" transform="rotate(-90,158,24)">EV-A</text>
+<text x="166" y="24" fill="#C06000" font-family="'Space Mono',monospace" font-size="7" transform="rotate(-90,166,24)">EV-B</text>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 3: SPECIFICHE ══════════════ -->
+<div class="panel" id="p3">
+<div class="cp-banner">
+  <div>⚡ <b>© 2026 POLARIS Platform</b> &nbsp;·&nbsp; Tutti i diritti riservati &nbsp;·&nbsp; <b>CONFIDENZIALE</b> &nbsp;·&nbsp; Non divulgare senza autorizzazione scritta</div>
+  <div class="cp-right">POLARIS EV System &nbsp;·&nbsp; Patent Pending &nbsp;·&nbsp; Rev. 2.0 &nbsp;·&nbsp; Maggio 2026</div>
+</div>
+<p class="page-title">Specifiche Tecniche Complete</p>
+<p class="page-desc">Dati tecnici, normative applicabili e caratteristiche di sistema per il palo LUMIS EV.</p>
+
+<div class="g2">
+<div>
+<div class="card" style="margin-bottom:20px">
+<div class="card-title">STRUTTURA E MATERIALI</div>
+<div class="spec-group"><div class="spec-group-title">FUSTO</div>
+<div class="spec-row"><span class="spec-k">Altezza</span><span class="spec-v accent">8,0 m</span></div>
+<div class="spec-row"><span class="spec-k">Profilo</span><span class="spec-v">Conico ottagonale</span></div>
+<div class="spec-row"><span class="spec-k">Ø base / sommità</span><span class="spec-v">114 / 60 mm</span></div>
+<div class="spec-row"><span class="spec-k">Spessore parete</span><span class="spec-v">4 mm</span></div>
+<div class="spec-row"><span class="spec-k">Lega</span><span class="spec-v">Al 6082-T6 estruso</span></div>
+<div class="spec-row"><span class="spec-k">Finitura</span><span class="spec-v">Anodizzato 20µm RAL 7016</span></div>
+<div class="spec-row"><span class="spec-k">Massa fusto</span><span class="spec-v">≈ 42 kg</span></div>
+<div class="spec-row"><span class="spec-k">Norma strutturale</span><span class="spec-v">UNI EN 40-3-3</span></div>
+</div>
+<div class="spec-group"><div class="spec-group-title">CAVITÀ INTEGRATE</div>
+<div class="spec-row"><span class="spec-k">N. cavità dedicate</span><span class="spec-v accent">5 canali</span></div>
+<div class="spec-row"><span class="spec-k">Sezione EV/presa</span><span class="spec-v">3×10 mm² + PE</span></div>
+<div class="spec-row"><span class="spec-k">Sezione illuminaz.</span><span class="spec-v">2 × 2,5 mm² Cu</span></div>
+<div class="spec-row"><span class="spec-k">Dati</span><span class="spec-v">Cat.6A shielded FTP</span></div>
+<div class="spec-row"><span class="spec-k">PE equipotenziale</span><span class="spec-v">16 mm² Cu</span></div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">ILLUMINAZIONE</div>
+<div class="spec-group"><div class="spec-group-title">CORPO LUMINOSO</div>
+<div class="spec-row"><span class="spec-k">Potenza</span><span class="spec-v">80 W LED</span></div>
+<div class="spec-row"><span class="spec-k">Flusso luminoso</span><span class="spec-v">10.000 lm</span></div>
+<div class="spec-row"><span class="spec-k">Efficienza</span><span class="spec-v">125 lm/W</span></div>
+<div class="spec-row"><span class="spec-k">Temperatura colore</span><span class="spec-v">4.000 K neutro</span></div>
+<div class="spec-row"><span class="spec-k">CRI</span><span class="spec-v">> 80</span></div>
+<div class="spec-row"><span class="spec-k">Vita utile L80B10</span><span class="spec-v">100.000 h</span></div>
+<div class="spec-row"><span class="spec-k">IP corpo</span><span class="spec-v">IP66 / IK08</span></div>
+<div class="spec-row"><span class="spec-k">Dimming</span><span class="spec-v">DALI-2 / 0-10V</span></div>
+<div class="spec-row"><span class="spec-k">Norma</span><span class="spec-v">EN 13201 (strade)</span></div>
+</div>
+</div>
+</div>
+
+<div>
+<div class="card" style="margin-bottom:20px">
+<div class="card-title">RICARICA EV + V2G</div>
+<div class="spec-group"><div class="spec-group-title">POTENZA</div>
+<div class="spec-row"><span class="spec-k">Potenza per presa</span><span class="spec-v accent">1 – 7 kW scalabile</span></div>
+<div class="spec-row"><span class="spec-k">Prese</span><span class="spec-v accent">2× Type 2 laterali</span></div>
+<div class="spec-row"><span class="spec-k">Totale max</span><span class="spec-v accent">14 kW</span></div>
+<div class="spec-row"><span class="spec-k">Alimentazione</span><span class="spec-v">230V 1P+N 32A</span></div>
+<div class="spec-row"><span class="spec-k">Standard presa</span><span class="spec-v">IEC 62196-2 Type 2</span></div>
+</div>
+<div class="spec-group"><div class="spec-group-title">VEHICLE TO GRID</div>
+<div class="spec-row"><span class="spec-k">V2G</span><span class="spec-v blue">Predisposto</span></div>
+<div class="spec-row"><span class="spec-k">Standard</span><span class="spec-v">ISO 15118-20</span></div>
+<div class="spec-row"><span class="spec-k">Direzione</span><span class="spec-v">Bidirezionale AC</span></div>
+<div class="spec-row"><span class="spec-k">RCD tipo</span><span class="spec-v">Tipo B (obblig. V2G)</span></div>
+<div class="spec-row"><span class="spec-k">Contatore</span><span class="spec-v">MID bidirezionale</span></div>
+<div class="spec-row"><span class="spec-k">Abilitazione</span><span class="spec-v">Firmware OTA + DSO</span></div>
+</div>
+<div class="spec-group"><div class="spec-group-title">SMART SYSTEM</div>
+<div class="spec-row"><span class="spec-k">Protocollo</span><span class="spec-v">OCPP 2.0.1</span></div>
+<div class="spec-row"><span class="spec-k">Autenticazione</span><span class="spec-v">RFID + App + P&amp;C</span></div>
+<div class="spec-row"><span class="spec-k">Connettività</span><span class="spec-v">4G + LoRa + ETH</span></div>
+<div class="spec-row"><span class="spec-k">Back-office</span><span class="spec-v">Cloud OCPP</span></div>
+<div class="spec-row"><span class="spec-k">Illuminazione smart</span><span class="spec-v">Coordinata EV+luce</span></div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">NORMATIVE APPLICABILI</div>
+<table>
+<thead><tr><th>Norma</th><th>Campo</th></tr></thead>
+<tbody>
+<tr><td class="td-label">UNI EN 40-3-3</td><td>Struttura palo con carico aggiuntivo</td></tr>
+<tr><td class="td-label">IEC 62196-2</td><td>Presa Type 2 (Mennekes)</td></tr>
+<tr><td class="td-label">IEC 61851-1</td><td>Ricarica conduttiva modo 3</td></tr>
+<tr><td class="td-label">ISO 15118-20</td><td>V2G bidirezionale AC</td></tr>
+<tr><td class="td-label">OCPP 2.0.1</td><td>Back-office colonnine</td></tr>
+<tr><td class="td-label">CEI 64-8 §722</td><td>Infrastrutture EV BT</td></tr>
+<tr><td class="td-label">EN 13201</td><td>Illuminazione stradale</td></tr>
+<tr><td class="td-label">Dir. 2014/32/UE</td><td>MID misuratori energia</td></tr>
+<tr><td class="td-label">DALI-2</td><td>Protocollo dimming LED</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 4: CONFRONTO RETROFIT ══════════════ -->
+<div class="panel" id="p4">
+<div class="cp-banner">
+  <div>⚡ <b>© 2026 POLARIS Platform</b> &nbsp;·&nbsp; Tutti i diritti riservati &nbsp;·&nbsp; <b>CONFIDENZIALE</b> &nbsp;·&nbsp; Non divulgare senza autorizzazione scritta</div>
+  <div class="cp-right">POLARIS EV System &nbsp;·&nbsp; Patent Pending &nbsp;·&nbsp; Rev. 2.0 &nbsp;·&nbsp; Maggio 2026</div>
+</div>
+<p class="page-title">Confronto: Palo Nuovo vs Retrofit su Esistente</p>
+<p class="page-desc">Analisi comparativa tra il sistema LUMIS EV (nuova installazione integrata) e il retrofit su palo esistente (sistema POLARIS WB-22).</p>
+
+<div class="card" style="margin-bottom:24px">
+<div class="card-title">TABELLA COMPARATIVA</div>
+<table>
+<thead>
+<tr><th>Caratteristica</th><th style="color:#C06000">POLARIS WB-22 (Retrofit)</th><th style="color:#006A48">LUMIS EV (Nuova install.)</th></tr>
+</thead>
+<tbody>
+<tr><td class="td-label">Tipo installazione</td><td class="td-old">Accessorio aggiunto su palo esistente</td><td class="td-new">Integrato nella struttura by design</td></tr>
+<tr><td class="td-label">Palo</td><td class="td-old">Esistente (variabile)</td><td class="td-new">Al 6082-T6 con cavità dedicate</td></tr>
+<tr><td class="td-label">Cablaggio EV</td><td class="td-old">Esterno / derivato da esistente</td><td class="td-new">Interno al fusto, canale dedicato</td></tr>
+<tr><td class="td-label">Scavi necessari</td><td class="td-old">Solo se cavidotto mancante</td><td class="td-new">Sì (unico scavo per tutto)</td></tr>
+<tr><td class="td-label">Tempo installazione</td><td class="td-old">3–4 ore per palo</td><td class="td-new">1 giorno (scavo + palo + collaudo)</td></tr>
+<tr><td class="td-label">Costo per punto</td><td class="td-old">2.500–4.000 € (solo modulo EV)</td><td class="td-new">8.000–14.000 € (palo completo)</td></tr>
+<tr><td class="td-label">Richiede palo nuovo</td><td class="td-old">No</td><td class="td-new">Sì</td></tr>
+<tr><td class="td-label">Integrità estetica</td><td class="td-old">Modulo visibile sul palo</td><td class="td-new">Design unitario, compatto</td></tr>
+<tr><td class="td-label">Verifica strutturale</td><td class="td-old">Obbligatoria UNI 11479</td><td class="td-new">Già certificata in fabbrica</td></tr>
+<tr><td class="td-label">Illuminazione</td><td class="td-old">Esistente (invariata)</td><td class="td-new">LED 80W nuovo, smart dimming</td></tr>
+<tr><td class="td-label">Cavità cavi</td><td class="td-old">Cavo esterno o in cavidotto</td><td class="td-new">5 canali dedicati nel profilo</td></tr>
+<tr><td class="td-label">V2G</td><td class="td-old">Predisposto (firmware OTA)</td><td class="td-new">Predisposto + RCD tipo B nativo</td></tr>
+<tr><td class="td-label">Potenza per presa</td><td class="td-old">1–7 kW scalabile</td><td class="td-new">1–7 kW scalabile</td></tr>
+<tr><td class="td-label">Vita utile stimata</td><td class="td-old">Vita palo residua</td><td class="td-new">30+ anni</td></tr>
+<tr><td class="td-label">Caso d'uso ideale</td><td class="td-old">Zone urbane dense già illuminate</td><td class="td-new">Nuovi quartieri, parcheggi, aree di sviluppo</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="g3">
+<div class="callout callout-amber">
+  <strong>📍 QUANDO SCEGLIERE IL RETROFIT</strong>
+  Zone urbane dense con pali esistenti in buone condizioni strutturali. Massima rapidità di deployment. Nessuno scavo, nessun cantiere. Ideale per retrofittare rapidamente centinaia di pali in un quartiere già illuminato.
+</div>
+<div class="callout callout-green">
+  <strong>🏗 QUANDO SCEGLIERE LUMIS EV</strong>
+  Nuove urbanizzazioni, parcheggi da zero, zone di sviluppo immobiliare, sostituzione di vecchi pali ammalorati. Design unitario garantisce massima integrazione estetica e affidabilità a lungo termine.
+</div>
+<div class="callout callout-blue">
+  <strong>⚡ STRATEGIA COMBINATA</strong>
+  Le due soluzioni sono complementari. Una città può usare POLARIS WB-22 per coprire rapidamente le aree esistenti, e LUMIS EV per le nuove urbanizzazioni — stesso back-office OCPP, stesso standard Type 2, V2G coordinato.
+</div>
+</div>
+</div>
+
+<div class="cp-footer">© 2026 POLARIS Platform · Tutti i diritti riservati · CONFIDENZIALE · Non divulgare senza autorizzazione scritta · POLARIS EV System · Patent Pending · Rev. 2.0 · Maggio 2026</div>
+</main>
+
+<script>
+function show(i){
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('on',j===i));
+  document.querySelectorAll('.tab').forEach((b,j)=>b.classList.toggle('on',j===i));
+}
+</script>
+</body>
+</html>
